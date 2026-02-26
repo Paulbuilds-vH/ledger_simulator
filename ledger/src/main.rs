@@ -1,22 +1,21 @@
 mod ledger;
-use ledger::{LedgerEntry, EntryType};
+use ledger::{Ledger, EntryType};
 
+fn main(){
+    let mut ledger=Ledger::new();
 
-fn main() {
-    let entry = LedgerEntry {
-        id: 1,
-        amount: 100.0,
-        description: "Deposit".to_string(),
-        date: "2026-02-25".to_string(),
-        entry_type: EntryType::Credit,
-    };
-
-    println!(
-    "Ledger Entry: {} {} {} {} {:?}",
-    entry.id,
-    entry.amount,
-    entry.description,
-    entry.date,
-    entry.entry_type
+    ledger.add_entry(
+    100.0,
+    "Initial deposit".to_string(),
+    "2026-02-26".to_string(),
+    EntryType::Credit,
 );
+
+ledger.add_entry(
+    40.0,
+    "Groceries".to_string(),
+    "2026-02-26".to_string(),
+    EntryType::Debit,
+);
+    ledger.list_entries();
 }
