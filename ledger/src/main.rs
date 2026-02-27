@@ -1,21 +1,22 @@
+use chrono::NaiveDate;
+
 mod ledger;
-use ledger::{Ledger, EntryType};
+use ledger::{EntryType, Ledger};
 
-fn main(){
-    let mut ledger=Ledger::new();
+fn main() {
+    let mut ledger = Ledger::new();
 
-    ledger.add_entry(
-    100.0,
-    "Initial deposit".to_string(),
-    "2026-02-26".to_string(),
-    EntryType::Credit,
-);
+    let date = NaiveDate::from_ymd_opt(2026, 2, 26).unwrap();
 
-ledger.add_entry(
-    40.0,
-    "Groceries".to_string(),
-    "2026-02-26".to_string(),
-    EntryType::Debit,
-);
+    match ledger.add_entry(10000, "Initial deposit".to_string(), date, EntryType::Credit) {
+        Ok(()) => println!("Entry added successfully"),
+        Err(e) => println!("Failed: {:?}", e),
+    }
+
+    match ledger.add_entry(4000, "Groceries".to_string(), date, EntryType::Debit) {
+        Ok(()) => println!("Entry added successfully"),
+        Err(e) => println!("Failed: {:?}", e),
+    }
+
     ledger.list_entries();
 }
